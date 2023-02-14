@@ -1,13 +1,3 @@
----
-title: "Robot Simulators"
-author: Jaime Godoy-Calvo
-date: February 14, 2023
-output: 
-    html_document:
-        toc: true
-        toc_depth: 2
----
-
 # Robot Simulators
 
 ## Webots
