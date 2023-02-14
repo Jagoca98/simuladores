@@ -1,6 +1,6 @@
 # Robot Simulators :robot:
 
-## Webots
+## Webots :lady_beetle:
 
 This project contains the files necessary to move a robot from its starting position to a goal, in this case a TurtleBot Burger :hamburger:, on a map generated in a particular way based on the surnames of the author. This project is available as a git repository.
 
