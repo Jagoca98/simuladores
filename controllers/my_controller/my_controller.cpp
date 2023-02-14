@@ -1,7 +1,7 @@
 // File:          my_controller.cpp
-// Date:
-// Description:
-// Author:
+// Date:          14-02-2023
+// Description:   Controller file to perform the motion of a turtlebot burguer with Webots
+// Author:        Jaime Godoy-Calvo
 // Modifications:
 
 // You may need to add webots include files such as
@@ -9,14 +9,41 @@
 // and/or to add some other includes
 #include <webots/Robot.hpp>
 #include <webots/Motor.hpp>
+#include <webots/Lidar.hpp>
 //// #include <webots/GPS.hpp>
 //// #include <webots/InertialUnit.hpp>
 
 #include <iostream>
 #include <limits>
+#include <stdio.h>
+// #include <array>
 
+void straight(webots::Motor* &motor_left, webots::Motor* &motor_right);
+void turn_left(webots::Motor* &motor_left, webots::Motor* &motor_right);
+void turn_right(webots::Motor* &motor_left, webots::Motor* &motor_right);
+void stop(webots::Motor* &motor_left, webots::Motor* &motor_right);
 // All the webots classes are defined in the "webots" namespace
 using namespace webots;
+
+void straight(webots::Motor* &motor_left, webots::Motor* &motor_right){
+  motor_left->setVelocity(-5.0);
+  motor_right->setVelocity(-5.0);
+}
+
+void turn_left(webots::Motor* &motor_left, webots::Motor* &motor_right){
+  motor_left->setVelocity(-2.5);
+  motor_right->setVelocity(2.5);
+}
+
+void turn_right(webots::Motor* &motor_left, webots::Motor* &motor_right){
+  motor_left->setVelocity(2.5);
+  motor_right->setVelocity(-2.5);
+}
+
+void stop(webots::Motor* &motor_left, webots::Motor* &motor_right){
+  motor_left->setVelocity(0.0);
+  motor_right->setVelocity(0.0);
+}
 
 // This is the main program of your controller.
 // It creates an instance of your Robot instance, launches its
@@ -36,10 +63,13 @@ int main(int argc, char **argv) {
   // instance of a device of the robot. Something like:
   webots::Motor* motor_left = robot->getMotor("left wheel motor");
   webots::Motor* motor_right = robot->getMotor("right wheel motor");
+  webots::Lidar* lidar =  robot->getLidar("LDS-01");
   //// DistanceSensor *ds = robot->getDistanceSensor("dsname");
   //// webots::GPS* gps = robot->getGPS("gps");
   //// webots::InertialUnit* imu = robot->getInertialUnit("inertial unit");
-
+  
+  lidar->enable(timeStep);
+  lidar->enablePointCloud();
   //// ds->enable(timeStep);
   //// gps->enable(timeStep);
   //// imu->enable(timeStep);
@@ -55,6 +85,10 @@ int main(int argc, char **argv) {
   while (robot->step(timeStep) != -1) {
     // Read the sensors:
     // Enter here functions to read sensor data, like:
+    const float *lidar_image = lidar->getRangeImage();
+    
+    // std::cout << lidar_image[315] << ", " << lidar_image[0]  << ", " << lidar_image[45];
+    // printf("\n");
     //// double val = ds->getValue();
     //// const double * pos = gps->getValues();
     /* const double * imu_rads = imu->getRollPitchYaw();
@@ -69,10 +103,21 @@ int main(int argc, char **argv) {
     // Process sensor data here.
 
     // Enter here functions to send actuator commands, like:
-     motor_left->setVelocity(-5.0);
-     motor_right->setVelocity(-5.0);
+    if(lidar_image[0]>0.5){
+      straight(motor_left, motor_right);
+    }
+    else{
+      stop(motor_left, motor_right);
+      turn_left(motor_left, motor_right);
+    }
+    if((lidar_image[45]<0.5) & (lidar_image[45]<lidar_image[315])){
+      turn_left(motor_left, motor_right);
+    }
+    if((lidar_image[45]<0.5) & (lidar_image[45]>lidar_image[315])){
+     turn_right(motor_left, motor_right);
+    }
   };
-
+  
   // Enter here exit cleanup code.
   std::cout << "Bye from c++!" << std::endl;
 
