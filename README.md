@@ -1,6 +1,6 @@
 # Robot Simulators :robot:
 
-## Gazebo
+## Gazebo 🛖
 
 This project contains the files necessary to move a robot from its starting position to a goal, in this case a pioneer robot, on a map generated in a particular way based on the surnames of the author. This project is available as a git repository.
 
@@ -17,6 +17,11 @@ mkdir -p build && cd build && cmake .. && make
 cd ../..
 GAZEBO_PLUGIN_PATH=model_push_g9/build gazebo --verbose map.world.xml 
 ```
+
+
+<p align="center">
+    <img src="assets/Gazebo-Map.png" width="80%" height="80%">
+</p>
 
 ## Controller :warning:
 :warning: Work in progress :warning:
