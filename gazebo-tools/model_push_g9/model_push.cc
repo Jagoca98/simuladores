@@ -24,6 +24,9 @@
 namespace gazebo
 {
 
+bool straight = true;
+int i=0;
+
 class ModelPush : public ModelPlugin
 {
 public:
@@ -40,8 +43,19 @@ public:
     void OnUpdate()
     {
         // Apply a small linear velocity to the model.
-        model->SetLinearVel(ignition::math::Vector3d(0.3, 0, 0));
-        model->SetAngularVel(ignition::math::Vector3d(0, 0, 0));
+        if(straight){
+            model->SetLinearVel(ignition::math::Vector3d(0.3, 0, 0));
+            i++;
+            if(i>10000){
+                straight = !straight;
+            }
+        }else{    
+            model->SetAngularVel(ignition::math::Vector3d(0, 0, 0.3));
+            i--;
+            if(i<0){
+                straight = !straight;
+            }
+        }
         ignition::math::Pose3d pose = model->WorldPose();
         printf("At: %f %f %f\n", pose.Pos().X(), pose.Pos().Y(), pose.Pos().Z());
     }
