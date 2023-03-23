@@ -1,0 +1,8 @@
+README.md
+setup.py
+gymnasium_csv/__init__.py
+gymnasium_csv.egg-info/PKG-INFO
+gymnasium_csv.egg-info/SOURCES.txt
+gymnasium_csv.egg-info/dependency_links.txt
+gymnasium_csv.egg-info/requires.txt
+gymnasium_csv.egg-info/top_level.txt
