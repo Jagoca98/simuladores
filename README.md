@@ -1,6 +1,6 @@
 # Gymnasium 🏋️‍♀️
 
-A bfs has been implemented to locate the goal and move towards it. 
+A `bfs` exploration algorithm has been implemented to locate the goal and move towards it. 
 
 
 ## Intalling
