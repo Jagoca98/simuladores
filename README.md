@@ -6,7 +6,7 @@ A bfs has been implemented to locate the goal and move towards it.
 ## Intalling
 This work can be found on the following github repository:
 ```bash
-git clone -b gymnasium 
+git clone -b gymnasium https://github.com/Jagoca98/simuladores.git
 ```
 
 
